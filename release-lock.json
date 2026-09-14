@@ -1,0 +1,40 @@
+{
+  "wire-connect": {
+    "assets": {
+      "darwin-arm64": {
+        "sha256": "ea5cb356039a7fb6dbc433754af2abcf0f37d6b4dd0803efc82178a503f17ceb",
+        "url": "https://github.com/k0ngk0ng/wire-connect/releases/download/v1.2.1/wire-connect-1.2.1-darwin-arm64.tar.gz"
+      },
+      "linux-amd64": {
+        "sha256": "cdd4b830cc81c7247becf382f6731f04db065dce564fb74366f6bad7c31f3afb",
+        "url": "https://github.com/k0ngk0ng/wire-connect/releases/download/v1.2.1/wire-connect-1.2.1-linux-amd64.tar.gz"
+      },
+      "linux-arm64": {
+        "sha256": "ebe80e524825d9eed1329d63d0a874f3c95d14a5a81fed00e326d3c151005793",
+        "url": "https://github.com/k0ngk0ng/wire-connect/releases/download/v1.2.1/wire-connect-1.2.1-linux-arm64.tar.gz"
+      }
+    },
+    "version": "1.2.1"
+  },
+  "wirectl": {
+    "assets": {
+      "darwin-amd64": {
+        "sha256": "b99835b78710c08a41d566f9f65c0d8616aecbc043fe83c2bb39f40995ad0557",
+        "url": "https://github.com/k0ngk0ng/wirectl/releases/download/v0.2.3/wirectl-0.2.3-darwin-amd64.tar.gz"
+      },
+      "darwin-arm64": {
+        "sha256": "c51c03cafbef54d8191b630542a1312184dd908126d998b8e863192fff822b99",
+        "url": "https://github.com/k0ngk0ng/wirectl/releases/download/v0.2.3/wirectl-0.2.3-darwin-arm64.tar.gz"
+      },
+      "linux-amd64": {
+        "sha256": "d80fe8036a13f2b861ccf15b9a9796a635f2f48e5482d411cecab4d4ed9170cb",
+        "url": "https://github.com/k0ngk0ng/wirectl/releases/download/v0.2.3/wirectl-0.2.3-linux-amd64.tar.gz"
+      },
+      "linux-arm64": {
+        "sha256": "b547fe0692b16d1a509d8c8b834b76653f913abc58d6ea51ea77413f0e7490d8",
+        "url": "https://github.com/k0ngk0ng/wirectl/releases/download/v0.2.3/wirectl-0.2.3-linux-arm64.tar.gz"
+      }
+    },
+    "version": "0.2.3"
+  }
+}
