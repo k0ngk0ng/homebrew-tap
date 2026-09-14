@@ -1,24 +1,24 @@
 class WireConnect < Formula
   desc "Encrypted peer-to-peer networking with NAT traversal and relay fallback"
   homepage "https://github.com/k0ngk0ng/wire-connect"
-  version "1.2.2"
+  version "1.3.1"
   license "MIT"
 
   on_macos do
     depends_on arch: :arm64
 
-    url "https://github.com/k0ngk0ng/wire-connect/releases/download/v1.2.2/wire-connect-1.2.2-darwin-arm64.tar.gz"
-    sha256 "50453a4b68a8a9c6bf831f2c5732aa78531bc5c7eecf95806a8185d8a34a4bc2"
+    url "https://github.com/k0ngk0ng/wire-connect/releases/download/v1.3.1/wire-connect-1.3.1-darwin-arm64.tar.gz"
+    sha256 "8a73f20f67d3679397bdea668818f2d2a798632e0eb2d64ba12ccba00700e306"
   end
 
   on_linux do
     on_arm do
-      url "https://github.com/k0ngk0ng/wire-connect/releases/download/v1.2.2/wire-connect-1.2.2-linux-arm64.tar.gz"
-      sha256 "39d77c7250f8dc5195c1196bf259732451e4824d77d53845ebfdd3e5d5b70fe5"
+      url "https://github.com/k0ngk0ng/wire-connect/releases/download/v1.3.1/wire-connect-1.3.1-linux-arm64.tar.gz"
+      sha256 "a135785d79276ca5a7d261515fddb3db13211e4a538a469f160bbba514aaef98"
     end
     on_intel do
-      url "https://github.com/k0ngk0ng/wire-connect/releases/download/v1.2.2/wire-connect-1.2.2-linux-amd64.tar.gz"
-      sha256 "ef8d8c5264ecab1a78c7b350c9be25fbf385fc899a5639ea8147c4b086cffb5e"
+      url "https://github.com/k0ngk0ng/wire-connect/releases/download/v1.3.1/wire-connect-1.3.1-linux-amd64.tar.gz"
+      sha256 "b3e77d6ea29ce68ce507fff36b27836e9bcb678ce3702b29fe0717b82d6fb42c"
     end
   end
 
