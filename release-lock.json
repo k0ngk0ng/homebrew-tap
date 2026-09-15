@@ -19,19 +19,19 @@
   "wire-download": {
     "assets": {
       "darwin-arm64": {
-        "sha256": "9339a0193b4ff449ca6fe351282547149a0432164f32961cef3440f6afcede5a",
-        "url": "https://github.com/k0ngk0ng/wire-download/releases/download/v0.2.2/wire-download-0.2.2-darwin-arm64.tar.gz"
+        "sha256": "0de405e2296d4b9316df95fcd603bf7009fb0ee727ec516a9a31b4d68c0ea91d",
+        "url": "https://github.com/k0ngk0ng/wire-download/releases/download/v0.2.3/wire-download-0.2.3-darwin-arm64.tar.gz"
       },
       "linux-amd64": {
-        "sha256": "e4754e85a721392a9c279c3b86a117f8505fabf29e7b86d019db22c252f14720",
-        "url": "https://github.com/k0ngk0ng/wire-download/releases/download/v0.2.2/wire-download-0.2.2-linux-amd64.tar.gz"
+        "sha256": "253a07f2b7ddb7f7163bb061837ccfa0e91d2acda983179f585723443cedd1f9",
+        "url": "https://github.com/k0ngk0ng/wire-download/releases/download/v0.2.3/wire-download-0.2.3-linux-amd64.tar.gz"
       },
       "linux-arm64": {
-        "sha256": "0c6d1fc378f6e3366ce939b991c394ddc36236e595baa80050908d2ce1566972",
-        "url": "https://github.com/k0ngk0ng/wire-download/releases/download/v0.2.2/wire-download-0.2.2-linux-arm64.tar.gz"
+        "sha256": "e56496d1e7608b73afa7aab644fd52b06a232801a648bf4f4f670d94d9e3f513",
+        "url": "https://github.com/k0ngk0ng/wire-download/releases/download/v0.2.3/wire-download-0.2.3-linux-arm64.tar.gz"
       }
     },
-    "version": "0.2.2"
+    "version": "0.2.3"
   },
   "wirectl": {
     "assets": {
