@@ -41,9 +41,10 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p "$HOMEBREW_CACHE" "$HOMEBREW_LOGS" "$HOMEBREW_TEMP"
-          brew install k0ngk0ng/tap/wire-connect
-          brew test k0ngk0ng/tap/wirectl k0ngk0ng/tap/wire-connect
+          brew install k0ngk0ng/tap/wire-connect k0ngk0ng/tap/wire-download
+          brew test k0ngk0ng/tap/wirectl k0ngk0ng/tap/wire-connect k0ngk0ng/tap/wire-download
           test "$(wirectl connect version)" = "$(wirectl-connect version)"
+          test "$(wirectl download version)" = "$(wirectl-download version)"
           prefix="$(brew --prefix wire-connect)"
           test -s "$prefix/etc/bash_completion.d/wirectl"
           test -L "$prefix/etc/bash_completion.d/wirectl-connect"
@@ -52,6 +53,31 @@ jobs:
           if command -v zsh >/dev/null; then
             zsh -n "$prefix/share/zsh/site-functions/_wirectl"
           fi
-          brew reinstall k0ngk0ng/tap/wire-connect
-          brew test k0ngk0ng/tap/wire-connect
-          brew uninstall wire-connect wirectl
+          download_prefix="$(brew --prefix wire-download)"
+          test ! -e "$download_prefix/bin/wirectl"
+          test ! -e "$download_prefix/etc/bash_completion.d/wirectl"
+          test ! -e "$download_prefix/share/zsh/site-functions/_wirectl"
+          test -x "$download_prefix/libexec/wirectl-download/bin/aria2c"
+          test -x "$download_prefix/libexec/wirectl-download/bin/amuled"
+          test -x "$download_prefix/libexec/wirectl-download/bin/amulecmd"
+          test -s "$download_prefix/etc/bash_completion.d/wirectl-download"
+          test -s "$download_prefix/share/fish/vendor_completions.d/wirectl-download.fish"
+          head -1 "$download_prefix/share/zsh/site-functions/_wirectl-download" | grep -Fx '#compdef wirectl-download'
+          bash -n "$download_prefix/etc/bash_completion.d/wirectl-download"
+          bash -c '
+            set -e
+            source "$1"
+            original=$(complete -p wirectl)
+            source "$2"
+            test "$(complete -p wirectl)" = "$original"
+            COMP_WORDS=(wirectl-download search --type to)
+            COMP_CWORD=3
+            _wirectl_download_completion
+            test "${COMPREPLY[*]}" = torrent
+          ' -- "$prefix/etc/bash_completion.d/wirectl" "$download_prefix/etc/bash_completion.d/wirectl-download"
+          if command -v zsh >/dev/null; then
+            zsh -n "$download_prefix/share/zsh/site-functions/_wirectl-download"
+          fi
+          brew reinstall k0ngk0ng/tap/wire-connect k0ngk0ng/tap/wire-download
+          brew test k0ngk0ng/tap/wire-connect k0ngk0ng/tap/wire-download
+          brew uninstall wire-connect wire-download wirectl
