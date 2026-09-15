@@ -12,6 +12,7 @@ ROOT = Path(__file__).resolve().parents[1]
 PACKAGES = {
     "wirectl": {"minimum": (0, 2, 3), "targets": ("darwin-arm64", "darwin-amd64", "linux-arm64", "linux-amd64")},
     "wire-connect": {"minimum": (1, 2, 1), "targets": ("darwin-arm64", "linux-arm64", "linux-amd64")},
+    "wire-download": {"minimum": (0, 2, 2), "targets": ("darwin-arm64", "linux-arm64", "linux-amd64")},
 }
 
 
@@ -71,14 +72,20 @@ def release(package, specification):
 
 
 def render(package, item):
-    klass = "Wirectl" if package == "wirectl" else "WireConnect"
-    description = "Small command host for independently installed wirectl plugins" if package == "wirectl" else "Encrypted peer-to-peer networking with NAT traversal and relay fallback"
+    klass = {"wirectl": "Wirectl", "wire-connect": "WireConnect", "wire-download": "WireDownload"}[package]
+    description = {
+        "wirectl": "Small command host for independently installed wirectl plugins",
+        "wire-connect": "Encrypted peer-to-peer networking with NAT traversal and relay fallback",
+        "wire-download": "HTTP(S), eD2k and BitTorrent download daemon with bundled engines",
+    }[package]
     lines = [f"class {klass} < Formula", f'  desc "{description}"', f'  homepage "https://github.com/k0ngk0ng/{package}"', f'  version "{item["version"]}"']
     if package == "wire-connect":
         lines.append('  license "MIT"')
     lines += ["", "  on_macos do"]
-    if package == "wire-connect":
+    if package in ("wire-connect", "wire-download"):
         asset = item["assets"]["darwin-arm64"]
+        if package == "wire-download":
+            lines.append("    depends_on macos: :ventura")
         lines += ["    depends_on arch: :arm64", "", f'    url "{asset["url"]}"', f'    sha256 "{asset["sha256"]}"']
     else:
         for arch, target in (("arm", "darwin-arm64"), ("intel", "darwin-amd64")):
@@ -91,6 +98,56 @@ def render(package, item):
     lines += ["  end", ""]
     if package == "wire-connect":
         lines += ['  depends_on "k0ngk0ng/tap/wirectl"', "", "  def install", '    libexec.install "bin/wirectl-connect"', '    (libexec/".wire-connect-package-manager").write "homebrew\\n"', '    bin.install_symlink libexec/"wirectl-connect"', '    generate_completions_from_executable(bin/"wirectl-connect", "completion",', '                                         base_name: "wirectl", shells: [:bash])', '    bash_completion.install_symlink bash_completion/"wirectl" => "wirectl-connect"', '    completion = Utils.safe_popen_read(bin/"wirectl-connect", "completion", "zsh")', '    (zsh_completion/"_wirectl").write "#compdef wirectl wirectl-connect\\n#{completion}\\n_wirectl_connect_completion \\\"$@\\\"\\n"', "  end", "", "  def caveats", '    <<~EOS', '      Run as your regular user after install or upgrade:', '        wirectl connect setup', '        wirectl connect resume', '      setup requests administrator authorization for the network helper.', '      resume uses an existing pair. Pair new devices before using resume.', '    EOS', "  end", "", "  test do", '    assert_equal version.to_s, shell_output("#{bin}/wirectl-connect version").strip', '    output = shell_output("#{bin}/wirectl-connect update 2>&1", 1)', '    assert_match "brew upgrade k0ngk0ng/tap/wire-connect", output', "  end"]
+    elif package == "wire-download":
+        lines += [
+            '  depends_on "k0ngk0ng/tap/wirectl"',
+            "",
+            "  def install",
+            '    bin.install "bin/wirectl-download"',
+            '    libexec.install "libexec/wirectl-download"',
+            '    pkgshare.install "README.md", "deploy", "licenses"',
+            '    bash_script = Utils.safe_popen_read(bin/"wirectl-download", "completion", "bash")',
+            '    bash_script = bash_script.lines.reject { |line| line.start_with?("# bash completion", "# Install with:") || line == "complete -o filenames -F _wirectl_download_completion wirectl\\n" }.join',
+            '    (bash_completion/"wirectl-download").write bash_script',
+            '    zsh_script = Utils.safe_popen_read(bin/"wirectl-download", "completion", "zsh")',
+            '    zsh_script = zsh_script.lines.reject { |line| line.start_with?("#compdef ") || line == "compdef _wirectl_download_completion wirectl\\n" }.join',
+            '    (zsh_completion/"_wirectl-download").write "#compdef wirectl-download\\n#{zsh_script}\\n_wirectl_download_completion \\"$@\\"\\n"',
+            '    fish_script = Utils.safe_popen_read(bin/"wirectl-download", "completion", "fish")',
+            '    fish_script = fish_script.lines.reject { |line| line.start_with?("# fish completion") || line == "complete -c wirectl -f -a \'(__wirectl_download_complete)\'\\n" }.join',
+            '    (fish_completion/"wirectl-download.fish").write fish_script',
+            "  end",
+            "",
+            "  service do",
+            '    run [opt_bin/"wirectl-download", "daemon", "run"]',
+            "    keep_alive true",
+            "  end",
+            "",
+            "  def caveats",
+            "    <<~EOS",
+            "      Initialize the download state before starting the daemon:",
+            "        wirectl download init",
+            "      Stop the service before upgrading this formula:",
+            "        brew services stop wire-download",
+            "      If started manually, use wirectl download daemon stop instead.",
+            "      Manage the background daemon with:",
+            "        brew services start wire-download",
+            "        brew services stop wire-download",
+            "    EOS",
+            "  end",
+            "",
+            "  test do",
+            '    assert_equal version.to_s, shell_output("#{bin}/wirectl-download version").strip',
+            '    assert_match "Usage:", shell_output("#{bin}/wirectl-download --help")',
+            '    state = testpath/"state"',
+            '    downloads = testpath/"downloads"',
+            '    mkdir_p downloads',
+            '    system bin/"wirectl-download", "--data-dir", state, "init", "--downloads", downloads',
+            '    doctor = shell_output("#{bin}/wirectl-download --data-dir #{state} doctor")',
+            '    %w[aria2c amuled amulecmd].each do |engine|',
+            '      assert_match (prefix/"libexec/wirectl-download/bin/#{engine}").to_s, doctor',
+            '    end',
+            "  end",
+        ]
     else:
         lines += ["  def install", '    bin.install "bin/wirectl"', "  end", "", "  test do", '    assert_equal version.to_s, shell_output("#{bin}/wirectl version").strip', '    assert_match "Usage: wirectl", shell_output("#{bin}/wirectl --help")', "  end"]
     return "\n".join(lines + ["end", ""])

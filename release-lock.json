@@ -16,6 +16,23 @@
     },
     "version": "1.4.2"
   },
+  "wire-download": {
+    "assets": {
+      "darwin-arm64": {
+        "sha256": "9339a0193b4ff449ca6fe351282547149a0432164f32961cef3440f6afcede5a",
+        "url": "https://github.com/k0ngk0ng/wire-download/releases/download/v0.2.2/wire-download-0.2.2-darwin-arm64.tar.gz"
+      },
+      "linux-amd64": {
+        "sha256": "e4754e85a721392a9c279c3b86a117f8505fabf29e7b86d019db22c252f14720",
+        "url": "https://github.com/k0ngk0ng/wire-download/releases/download/v0.2.2/wire-download-0.2.2-linux-amd64.tar.gz"
+      },
+      "linux-arm64": {
+        "sha256": "0c6d1fc378f6e3366ce939b991c394ddc36236e595baa80050908d2ce1566972",
+        "url": "https://github.com/k0ngk0ng/wire-download/releases/download/v0.2.2/wire-download-0.2.2-linux-arm64.tar.gz"
+      }
+    },
+    "version": "0.2.2"
+  },
   "wirectl": {
     "assets": {
       "darwin-amd64": {

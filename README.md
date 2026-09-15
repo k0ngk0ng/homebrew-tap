@@ -38,18 +38,44 @@ If you previously installed binaries in `~/.local/bin`, inspect `type -a wirectl
 
 Bash and Zsh completions are installed in Homebrew's standard completion directories. Enable Homebrew shell completion in your shell as usual.
 
+## Downloads
+
+Install the download plugin alongside `wire-connect`, or on its own:
+
+```sh
+brew install k0ngk0ng/tap/wire-download
+wirectl download init
+wirectl download daemon start
+```
+
+`wire-download` depends on the shared `wirectl` host and includes its own aria2/aMule engines. It requires macOS 13+ on Apple Silicon, or Linux with glibc 2.36+ on AMD64/ARM64. The package does not start a daemon during installation. Skip `init` when an existing configuration is present.
+
+Stop the daemon before upgrades so its running engine files remain available:
+
+```sh
+wirectl download daemon stop
+brew update
+brew upgrade k0ngk0ng/tap/wirectl k0ngk0ng/tap/wire-download
+wirectl download daemon start
+```
+
+Alternatively, after `init`, use `brew services start k0ngk0ng/tap/wire-download`. For this mode, use `brew services stop` before upgrading and `brew services start` afterward instead of the daemon commands. Configuration and downloads stay in the existing user state/download directories.
+
+Bash, Zsh and Fish completion files use the standalone `wirectl-download` name, keeping the `wire-connect` completion files intact. See the [download README](https://github.com/k0ngk0ng/wire-download#shell-补全) for manual completion loading. If migrating from a manual install, check `type -a wirectl wirectl-download` and put Homebrew's `bin` first on `PATH`.
+
 ## Supported platforms
 
 | Package | macOS ARM64 | macOS Intel | Linux AMD64 | Linux ARM64 |
 |---|---|---|---|---|
 | wirectl | Yes | Yes | Yes | Yes |
 | wire-connect | Yes | No | Yes | Yes |
+| wire-download | Yes | No | Yes | Yes |
 
 Windows users can use the [Scoop bucket](https://github.com/k0ngk0ng/scoop-bucket).
 
 ## Automated maintenance
 
-GitHub Actions checks official stable releases hourly and on manual dispatch. It verifies GitHub asset SHA-256 digests against the separately published `SHA256SUMS`, renders formulas from `release-lock.json`, installs and tests both packages on macOS ARM64 and Linux AMD64/ARM64, then commits the update only after all jobs pass. No cross-repository personal access token is required. GitHub schedules may be delayed; the manual **Sync official releases** workflow can trigger an immediate check.
+GitHub Actions checks official stable releases hourly and on manual dispatch. It verifies GitHub asset SHA-256 digests against the separately published `SHA256SUMS`, renders formulas from `release-lock.json`, installs and tests all packages together on macOS ARM64 and Linux AMD64/ARM64, then commits the update only after all jobs pass. No cross-repository personal access token is required. GitHub schedules may be delayed; the manual **Sync official releases** workflow can trigger an immediate check.
 
 To prepare the same update locally:
 

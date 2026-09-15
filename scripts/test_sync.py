@@ -177,6 +177,42 @@ class ReleaseValidationTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "invalid or duplicate checksum entry"):
             fixture.run()
 
+    def test_existing_formula_rendering_is_unchanged(self):
+        lock = json.loads((sync.ROOT / "release-lock.json").read_text())
+        for package in ("wirectl", "wire-connect"):
+            with self.subTest(package=package):
+                formula = sync.ROOT / "Formula" / (package + ".rb")
+                self.assertEqual(formula.read_text(), sync.render(package, lock[package]))
+
+    def test_wire_download_metadata_and_formula(self):
+        specification = sync.PACKAGES["wire-download"]
+        self.assertEqual(specification["minimum"], (0, 2, 2))
+        self.assertEqual(specification["targets"], ("darwin-arm64", "linux-arm64", "linux-amd64"))
+
+        fixture = ReleaseFixture("wire-download")
+        formula = sync.render("wire-download", fixture.run())
+        self.assertIn("class WireDownload < Formula", formula)
+        self.assertIn("depends_on macos: :ventura", formula)
+        self.assertIn("depends_on arch: :arm64", formula)
+        self.assertIn('depends_on "k0ngk0ng/tap/wirectl"', formula)
+        self.assertIn('bin.install "bin/wirectl-download"', formula)
+        self.assertNotIn('bin.install "bin/wirectl"', formula)
+        self.assertIn('libexec.install "libexec/wirectl-download"', formula)
+        self.assertIn('pkgshare.install "README.md", "deploy", "licenses"', formula)
+        self.assertIn('run [opt_bin/"wirectl-download", "daemon", "run"]', formula)
+        self.assertIn("keep_alive true", formula)
+        self.assertIn('(bash_completion/"wirectl-download").write bash_script', formula)
+        self.assertNotIn('(bash_completion/"wirectl").write', formula)
+        self.assertIn('(zsh_completion/"_wirectl-download").write', formula)
+        self.assertNotIn('(zsh_completion/"_wirectl").write', formula)
+        self.assertIn('_wirectl_download_completion \\\"$@\\\"', formula)
+        self.assertIn('(fish_completion/"wirectl-download.fish").write fish_script', formula)
+        self.assertIn('complete -c wirectl -f -a', formula)
+        self.assertIn('(prefix/"libexec/wirectl-download/bin/#{engine}").to_s', formula)
+        self.assertNotIn('(opt_prefix/"libexec/wirectl-download/bin/#{engine}").to_s', formula)
+        self.assertIn('state = testpath/"state"', formula)
+        self.assertIn("doctor = shell_output", formula)
+
 
 if __name__ == "__main__":
     unittest.main()
