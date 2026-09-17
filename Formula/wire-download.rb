@@ -1,14 +1,14 @@
 class WireDownload < Formula
   desc "HTTP(S), eD2k and BitTorrent download daemon with bundled engines"
   homepage "https://github.com/k0ngk0ng/wire-download"
-  version "0.2.3"
+  version "0.2.4"
 
   on_macos do
     depends_on macos: :ventura
     depends_on arch: :arm64
 
-    url "https://github.com/k0ngk0ng/wire-download/releases/download/v0.2.3/wire-download-0.2.3-darwin-arm64.tar.gz"
-    sha256 "0de405e2296d4b9316df95fcd603bf7009fb0ee727ec516a9a31b4d68c0ea91d"
+    url "https://github.com/k0ngk0ng/wire-download/releases/download/v0.2.4/wire-download-0.2.4-darwin-arm64.tar.gz"
+    sha256 "d09f00e60cb4e61496363aad71189535c07eecbc03f501819f2594be430db6a4"
   end
 
   on_linux do
