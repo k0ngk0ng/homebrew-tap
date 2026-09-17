@@ -13,12 +13,12 @@ class WireDownload < Formula
 
   on_linux do
     on_arm do
-      url "https://github.com/k0ngk0ng/wire-download/releases/download/v0.2.3/wire-download-0.2.3-linux-arm64.tar.gz"
-      sha256 "e56496d1e7608b73afa7aab644fd52b06a232801a648bf4f4f670d94d9e3f513"
+      url "https://github.com/k0ngk0ng/wire-download/releases/download/v0.2.4/wire-download-0.2.4-linux-arm64.tar.gz"
+      sha256 "c2383d15b05af132f2105ab5c12fbcb3ce8b04c290937d485a4c8c0537256151"
     end
     on_intel do
-      url "https://github.com/k0ngk0ng/wire-download/releases/download/v0.2.3/wire-download-0.2.3-linux-amd64.tar.gz"
-      sha256 "253a07f2b7ddb7f7163bb061837ccfa0e91d2acda983179f585723443cedd1f9"
+      url "https://github.com/k0ngk0ng/wire-download/releases/download/v0.2.4/wire-download-0.2.4-linux-amd64.tar.gz"
+      sha256 "75c0fcf8a04bef8e70e2e403315528ab9d92e8b3e6624543b1b5b6b5179f341c"
     end
   end
 
