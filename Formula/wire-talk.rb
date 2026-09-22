@@ -1,4 +1,4 @@
-class Talk < Formula
+class WireTalk < Formula
   desc "Direct encrypted microphone and speaker conversations"
   homepage "https://github.com/k0ngk0ng/wire-talk"
   version "0.1.3"

@@ -63,6 +63,19 @@ Alternatively, after `init`, use `brew services start k0ngk0ng/tap/wire-download
 
 Bash, Zsh and Fish completion files use the standalone `wirectl-download` name, keeping the `wire-connect` completion files intact. See the [download README](https://github.com/k0ngk0ng/wire-download#shell-补全) for manual completion loading. If migrating from a manual install, check `type -a wirectl wirectl-download` and put Homebrew's `bin` first on `PATH`.
 
+## Voice conversations
+
+```sh
+brew install k0ngk0ng/tap/wire-talk
+wirectl talk invite
+```
+
+The package is `wire-talk`; the command remains `wirectl talk`. `talk` is kept as
+an alias. For an existing `talk` installation, stop active audio, run
+`brew update`, `brew migrate talk`, then `brew upgrade k0ngk0ng/tap/wire-talk`.
+Room configuration stays in the user configuration directory. Reinstall native
+login services with `wirectl talk daemon install` after migration.
+
 ## Supported platforms
 
 | Package | macOS ARM64 | macOS Intel | Linux AMD64 | Linux ARM64 |
@@ -70,6 +83,7 @@ Bash, Zsh and Fish completion files use the standalone `wirectl-download` name, 
 | wirectl | Yes | Yes | Yes | Yes |
 | wire-connect | Yes | No | Yes | Yes |
 | wire-download | Yes | No | Yes | Yes |
+| wire-talk | Yes | Yes | Yes | Yes |
 
 Windows users can use the [Scoop bucket](https://github.com/k0ngk0ng/scoop-bucket).
 
