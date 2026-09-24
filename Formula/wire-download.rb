@@ -1,24 +1,24 @@
 class WireDownload < Formula
   desc "HTTP(S), eD2k and BitTorrent download daemon with bundled engines"
   homepage "https://github.com/k0ngk0ng/wire-download"
-  version "0.2.6"
+  version "0.2.7"
 
   on_macos do
     depends_on macos: :ventura
     depends_on arch: :arm64
 
-    url "https://github.com/k0ngk0ng/wire-download/releases/download/v0.2.6/wire-download-0.2.6-darwin-arm64.tar.gz"
-    sha256 "1771b9644d0e0a98711d1ac02de4c45cfd554299dce0dad0af1d12bc594f2d95"
+    url "https://github.com/k0ngk0ng/wire-download/releases/download/v0.2.7/wire-download-0.2.7-darwin-arm64.tar.gz"
+    sha256 "7ccfe8895cade4c7f6f9cd516fbedacb8c2f7fae244cef27a262997ba11c397b"
   end
 
   on_linux do
     on_arm do
-      url "https://github.com/k0ngk0ng/wire-download/releases/download/v0.2.6/wire-download-0.2.6-linux-arm64.tar.gz"
-      sha256 "2fffbd9895c30e42228b772a269525cb617c168c1bd7366680015845310a80c5"
+      url "https://github.com/k0ngk0ng/wire-download/releases/download/v0.2.7/wire-download-0.2.7-linux-arm64.tar.gz"
+      sha256 "6b287f69ca93ad6742ae62503850074acb90c6ae94f5fcb93652c41a5c6fe913"
     end
     on_intel do
-      url "https://github.com/k0ngk0ng/wire-download/releases/download/v0.2.6/wire-download-0.2.6-linux-amd64.tar.gz"
-      sha256 "47dd5d59491ecd85e432a3af413f6f61786ad04881a60b53f117f695483c2593"
+      url "https://github.com/k0ngk0ng/wire-download/releases/download/v0.2.7/wire-download-0.2.7-linux-amd64.tar.gz"
+      sha256 "c6f842b0d02c7a726e02396e964cb02ee526b693068faa43412c89fffe3cbe55"
     end
   end
 
