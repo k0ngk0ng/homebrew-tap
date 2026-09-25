@@ -1,27 +1,27 @@
 class WireTalk < Formula
   desc "Direct encrypted microphone and speaker conversations"
   homepage "https://github.com/k0ngk0ng/wire-talk"
-  version "0.1.11"
+  version "0.1.12"
   license "MIT"
   depends_on "k0ngk0ng/tap/wirectl"
   on_macos do
     on_arm do
-      url "https://github.com/k0ngk0ng/wire-talk/releases/download/v0.1.11/wire-talk-0.1.11-darwin-arm64.tar.gz"
-      sha256 "16c6e3daac9b0d89e143abd06afeb42db7f186dc3b828a48147d43cad917fa33"
+      url "https://github.com/k0ngk0ng/wire-talk/releases/download/v0.1.12/wire-talk-0.1.12-darwin-arm64.tar.gz"
+      sha256 "402728fdf593974251f8483d1cfd8fef14f7209c11c34d7baea9f36f5e7c2461"
     end
     on_intel do
-      url "https://github.com/k0ngk0ng/wire-talk/releases/download/v0.1.11/wire-talk-0.1.11-darwin-amd64.tar.gz"
-      sha256 "4c3a81e12c194a60c061dd47f4f992b22602cbf04b48731df38ddf839b4b2cca"
+      url "https://github.com/k0ngk0ng/wire-talk/releases/download/v0.1.12/wire-talk-0.1.12-darwin-amd64.tar.gz"
+      sha256 "60f3989c31a13118f21a4f96d1ec3b70979dbc4485377944d1c839467069e0c0"
     end
   end
   on_linux do
     on_arm do
-      url "https://github.com/k0ngk0ng/wire-talk/releases/download/v0.1.11/wire-talk-0.1.11-linux-arm64.tar.gz"
-      sha256 "aebf1a96f002a9dd27a4bcd58654d009884bc686e38c4bdd43d4969941b4aae9"
+      url "https://github.com/k0ngk0ng/wire-talk/releases/download/v0.1.12/wire-talk-0.1.12-linux-arm64.tar.gz"
+      sha256 "619901feffa206ffc495bcd7ef1c62418136f13406931aaa1424ccb4cada8f3e"
     end
     on_intel do
-      url "https://github.com/k0ngk0ng/wire-talk/releases/download/v0.1.11/wire-talk-0.1.11-linux-amd64.tar.gz"
-      sha256 "546b5e49b7e610ca9f2c0c9cf1ca3fa0007bd95b8b9fee5a590c12d69fc16f77"
+      url "https://github.com/k0ngk0ng/wire-talk/releases/download/v0.1.12/wire-talk-0.1.12-linux-amd64.tar.gz"
+      sha256 "aa951f2b1708ec9355d2e0fcd14874774fe9b16638d7d9cedfa86d758caa8e2e"
     end
   end
   def install
