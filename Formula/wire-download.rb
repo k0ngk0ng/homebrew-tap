@@ -1,24 +1,24 @@
 class WireDownload < Formula
-  desc "HTTP(S), eD2k and BitTorrent download daemon with bundled engines"
+  desc "HTTP, BitTorrent, eD2k, X and YouTube downloads with bundled engines"
   homepage "https://github.com/k0ngk0ng/wire-download"
-  version "0.2.7"
+  version "0.3.1"
 
   on_macos do
     depends_on macos: :ventura
     depends_on arch: :arm64
 
-    url "https://github.com/k0ngk0ng/wire-download/releases/download/v0.2.7/wire-download-0.2.7-darwin-arm64.tar.gz"
-    sha256 "7ccfe8895cade4c7f6f9cd516fbedacb8c2f7fae244cef27a262997ba11c397b"
+    url "https://github.com/k0ngk0ng/wire-download/releases/download/v0.3.1/wire-download-0.3.1-darwin-arm64.tar.gz"
+    sha256 "9c566e07bc2bd6b402c7c92c7b0a4df5c34eb2a1f434e31f353b1b3bcd84ebc9"
   end
 
   on_linux do
     on_arm do
-      url "https://github.com/k0ngk0ng/wire-download/releases/download/v0.2.7/wire-download-0.2.7-linux-arm64.tar.gz"
-      sha256 "6b287f69ca93ad6742ae62503850074acb90c6ae94f5fcb93652c41a5c6fe913"
+      url "https://github.com/k0ngk0ng/wire-download/releases/download/v0.3.1/wire-download-0.3.1-linux-arm64.tar.gz"
+      sha256 "bff69d35348a59c90731aef41b8c6e29f70ece0474dae73600c2eed9a027a360"
     end
     on_intel do
-      url "https://github.com/k0ngk0ng/wire-download/releases/download/v0.2.7/wire-download-0.2.7-linux-amd64.tar.gz"
-      sha256 "c6f842b0d02c7a726e02396e964cb02ee526b693068faa43412c89fffe3cbe55"
+      url "https://github.com/k0ngk0ng/wire-download/releases/download/v0.3.1/wire-download-0.3.1-linux-amd64.tar.gz"
+      sha256 "b1566e513c235a459cab836e37ddad58f62fd87cdb54d9e0d532493bfba0d059"
     end
   end
 
@@ -65,7 +65,7 @@ class WireDownload < Formula
     mkdir_p downloads
     system bin/"wirectl-download", "--data-dir", state, "init", "--downloads", downloads
     doctor = shell_output("#{bin}/wirectl-download --data-dir #{state} doctor")
-    %w[aria2c amuled amulecmd].each do |engine|
+    %w[aria2c amuled amulecmd yt-dlp ffmpeg deno].each do |engine|
       assert_match (prefix/"libexec/wirectl-download/bin/#{engine}").to_s, doctor
     end
   end
