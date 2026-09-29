@@ -72,12 +72,16 @@ def release(package, specification):
 
 
 def render(package, item):
+    video_downloads = package == "wire-download" and tuple(map(int, item["version"].split("."))) >= (0, 3, 0)
+    download_engines = "aria2c amuled amulecmd" + (" yt-dlp ffmpeg deno" if video_downloads else "")
     klass = {"wirectl": "Wirectl", "wire-connect": "WireConnect", "wire-download": "WireDownload"}[package]
     description = {
         "wirectl": "Small command host for independently installed wirectl plugins",
         "wire-connect": "Encrypted peer-to-peer networking with NAT traversal and relay fallback",
         "wire-download": "HTTP(S), eD2k and BitTorrent download daemon with bundled engines",
     }[package]
+    if video_downloads:
+        description = "HTTP, BitTorrent, eD2k, X and YouTube downloads with bundled engines"
     lines = [f"class {klass} < Formula", f'  desc "{description}"', f'  homepage "https://github.com/k0ngk0ng/{package}"', f'  version "{item["version"]}"']
     if package == "wire-connect":
         lines.append('  license "MIT"')
@@ -143,7 +147,7 @@ def render(package, item):
             '    mkdir_p downloads',
             '    system bin/"wirectl-download", "--data-dir", state, "init", "--downloads", downloads',
             '    doctor = shell_output("#{bin}/wirectl-download --data-dir #{state} doctor")',
-            '    %w[aria2c amuled amulecmd].each do |engine|',
+            f'    %w[{download_engines}].each do |engine|',
             '      assert_match (prefix/"libexec/wirectl-download/bin/#{engine}").to_s, doctor',
             '    end',
             "  end",
